@@ -9,8 +9,10 @@ using TaskBoard.Data;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString)); ;
+    options.UseMySql(connectionString, serverVersion));
 
 builder.Services
     .AddDefaultIdentity<User>(options =>
